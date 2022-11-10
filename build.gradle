@@ -3,6 +3,10 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
 }
 
+ext.Versions = [
+    guava: "31.1-jre"
+]
+
 allprojects {
     group "ru.otus"
 
@@ -14,7 +18,7 @@ allprojects {
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         dependencies {
-            dependency "com.google.guava:guava:31.1-jre"
+            dependency "com.google.guava:guava:${Versions.guava}"
             }
         }
     }
