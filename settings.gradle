@@ -1,6 +1,7 @@
 rootProject.name = 'otus.java'
 include 'L01-gradle'
 include 'hw-01-gradle'
+
 include 'L02-gradle2'
 include 'L02-gradle2-libApi'
 include 'L02-gradle2-libApiUse'
@@ -9,5 +10,27 @@ include 'L03-qa'
 
 include 'L04-generics'
 include 'hw-04-generics'
+
+include 'L05-collections'
+include 'L06-annotations'
+
+include 'L08-gc:demo'
+include 'L08-gc:homework'
+
+include 'L09-docker'
+
+include 'L10-byteCodes'
+include 'L11-java8'
+
+include 'L12-solid'
+include 'L13-creationalPatterns'
+include 'L14-behavioralPatterns'
 include 'hw-12-solid'
 
+include 'L15-structuralPatterns:demo'
+include 'L15-structuralPatterns:homework'
+
+include 'L16-io:demo'
+include 'L16-io:homework'
+
+include 'L17-nio-logging'
