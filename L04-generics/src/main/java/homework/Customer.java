@@ -1,5 +1,6 @@
 package homework;
 
+
 public class Customer {
     private final long id;
     private String name;
@@ -9,6 +10,13 @@ public class Customer {
         this.id = id;
         this.name = name;
         this.scores = scores;
+    }
+
+    public static Customer Clone(Customer target){
+        if(target ==null)
+            return null;
+
+        return new Customer(target.id, target.name, target.scores);
     }
 
     public long getId() {
@@ -46,17 +54,12 @@ public class Customer {
         if (o == null || getClass() != o.getClass()) return false;
 
         Customer customer = (Customer) o;
-
-        if (id != customer.id) return false;
-        if (scores != customer.scores) return false;
-        return name != null ? name.equals(customer.name) : customer.name == null;
+        return id == customer.id;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (int) (scores ^ (scores >>> 32));
         return result;
     }
 }
