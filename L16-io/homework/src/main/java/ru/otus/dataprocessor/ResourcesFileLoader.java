@@ -1,14 +1,12 @@
 package ru.otus.dataprocessor;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.*;
 import ru.otus.model.Measurement;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ResourcesFileLoader implements Loader {
@@ -24,22 +22,26 @@ public class ResourcesFileLoader implements Loader {
     public List<Measurement> load() {
         //читает файл, парсит и возвращает результат
         var file = new File(fileName);
-        var gson = new Gson();
-//        HandlerInstantiator handlerInstantiator = ;
-//        mapper.setHandlerInstantiator(handlerInstantiator);
         try {
-//           //TODO
-//                gson.fromJson()
-            //return mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Measurement.class));
-//            return mapper.readValue(file, new TypeReference<List<Measurement>>() {});
-            return null;
+            return mapper.readValue(file, new TypeReference<List<MeasurementLoader>>() {})
+                    .stream().map(MeasurementLoader::getMeasurement).toList();
         } catch (IOException e) {
             throw new FileProcessException(e);
         }
-    }
 
-//    class HandlerInstantiator extends com.fasterxml.jackson.databind.cfg.HandlerInstantiator{
-//
-//    }
+
+   }
+
+   static class MeasurementLoader {
+       @JsonProperty("name")
+       private String name;
+       @JsonProperty("value")
+       private double value;
+
+       public MeasurementLoader(){}
+       public Measurement getMeasurement(){
+           return new Measurement(name, value);
+       }
+   }
 
 }

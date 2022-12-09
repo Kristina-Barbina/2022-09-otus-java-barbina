@@ -5,6 +5,7 @@ import ru.otus.model.Measurement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ProcessorAggregator implements Processor {
 
@@ -19,6 +20,6 @@ public class ProcessorAggregator implements Processor {
                 result.put(item.getName(), item.getValue());
             }
         });
-        return result;
+        return new TreeMap<>(result);
     }
 }
