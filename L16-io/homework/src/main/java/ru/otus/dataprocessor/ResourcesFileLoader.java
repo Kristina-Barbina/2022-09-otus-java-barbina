@@ -6,9 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import ru.otus.model.Measurement;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 public class ResourcesFileLoader implements Loader {
@@ -26,9 +24,12 @@ public class ResourcesFileLoader implements Loader {
         var file = new File(fileName);
         var gson = new Gson();
         try {
-            return gson.fromJson(new JsonReader(new FileReader(fileName)), new TypeToken<List<Measurement>>() {
-            }.getType());
-        } catch (IOException e) {
+            //return gson.fromJson(new JsonReader(new FileReader(fileName)), new TypeToken<List<Measurement>>() {}.getType());
+            InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
+            assert resourceAsStream != null;
+            return gson.fromJson(new JsonReader(new InputStreamReader(resourceAsStream)), new TypeToken<List<Measurement>>() {}.getType());
+
+        } catch (Exception e) {
             throw new FileProcessException(e);
         }
 
