@@ -13,10 +13,7 @@ import ru.otus.crm.model.Client;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Сохратяет объект в базу, читает объект из базы
@@ -39,7 +36,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
                 rs -> {
             try {
                 if (rs.next()) {
-                    T result = entityClassMetaData.getConstructor().newInstance();
+                    T result = (T) entityClassMetaData.getConstructor().newInstance();
                     for(var field: entityClassMetaData.getAllFields()){
                         field.setAccessible(true);
                         field.set(result, rs.getObject(field.getName(), field.getType()));
@@ -55,7 +52,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     @Override
     public List<T> findAll(Connection connection) {
-        return dbExecutor.executeSelect(connection, entitySQLMetaData.getSelectAllSql(), List.of(),
+        var allItems = dbExecutor.executeSelect(connection, entitySQLMetaData.getSelectAllSql(), List.of(),
                 rs -> {
                     var dataObjectsArray = new ArrayList<T>();
                     try {
@@ -71,7 +68,8 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
                     } catch (Exception e) {
                         throw new DataTemplateException(e);
                     }
-                }).get();
+                });
+        return allItems.orElseGet(ArrayList::new);
     }
 
     @Override

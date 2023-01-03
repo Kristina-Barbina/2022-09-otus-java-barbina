@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * "Разбирает" объект на составные части
  */
-public class EntityClassMetaDataImpl<T> implements EntityClassMetaData {
+public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
-    Class<T> clazz;
+    private final Class<T> clazz;
     public EntityClassMetaDataImpl(Class<T> c){
         clazz = c;
     }
