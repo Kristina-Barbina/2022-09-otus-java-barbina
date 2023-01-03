@@ -44,3 +44,10 @@ include 'L21-jpql:class-demo'
 include 'L21-jpql:homework-template'
 
 include 'L22-cache'
+include 'L06-annotations:homework'
+findProject(':L06-annotations:homework')?.name = 'homework'
+include 'L06-annotations:homework:main'
+findProject(':L06-annotations:homework:main')?.name = 'main'
+include 'L06-annotations:demo'
+findProject(':L06-annotations:demo')?.name = 'demo'
+
